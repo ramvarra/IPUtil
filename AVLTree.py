@@ -1,11 +1,20 @@
-# -*- coding: utf-8 -*-
+'''
+AVL Tree
+  Ack: Tim Rijavec tim@coder.si  http://coder.si
+'''
 ##  Implementation of AVL tree
 #
 #   Author: Tim Rijavec
 #           tim@coder.si
 #           http://coder.si
 
-class avlnode(object):
+debug_on = False
+
+def set_debug_on():
+    global debug_on
+    debug_on = True
+
+class avlnode:
     """
     A node in an avl tree.
     """
@@ -29,7 +38,7 @@ class avlnode(object):
         return str(self.key)
 
 
-class avltree(object):
+class AVLTree:
     """
     An avl tree.
     """
@@ -54,8 +63,8 @@ class avltree(object):
         # Initial tree
         if not self.node:
             self.node = n
-            self.node.left = avltree()
-            self.node.right = avltree()
+            self.node.left = AVLTree()
+            self.node.right = AVLTree()
         # Insert key to the left subtree
         elif key < self.node.key:
             self.node.left.insert(key)
@@ -273,8 +282,8 @@ class avltree(object):
         if node is None:
             node = self.node
 
-        if key == node.key:
-            return node
+        if node.key == key:
+            return node.key
 
         if key > node.key:
             next_node =  node.right.node
@@ -301,6 +310,40 @@ class avltree(object):
             self.display(node.left.node, level + 1)
 
 
+def dbg(*args):
+    global debug_on
+    if debug_on:
+        print(*args)
+
+class RangeKey:
+    def __init__(self, start, end=None, info=None):
+        self.start = start
+        self.end = end
+        self.info = info
+
+    def __eq__(self, other):
+        dbg('EQ: self = ', self, ' Other:', other)
+        if other.end is None: # comparing with single value
+            r = self.start <= other.start <= self.end
+            dbg(self, ' EQ ', other, '=', r)
+            return r
+        else:
+            r = (self.start == other.start and self.end == other.end)
+            dbg(self, ' EQ ', other, '=', r)
+            return r
+
+    def __lt__(self, other):
+        dbg('LT: self = ', self, ' Other:', other)
+        r = self.start < other.start
+        dbg(self, ' LT  ', other, '=', r)
+        return r
+
+    def __str__(self):
+        return "{}-{}".format(self.start, self.end)
+
+    def __repr__(self):
+        return str(self)
+
 class Key:
     def __init__(self, v):
         self.v = v
@@ -319,11 +362,25 @@ class Key:
 
 # Demo
 if __name__ == "__main__":
-    tree = avltree()
-    data = [Key(n) for n in range(10)]
-    for key in data:
-        tree.insert(key)
+    debug_on = False
+    def test1():
+        tree = AVLTree()
+        data = [Key(n) for n in range(10)]
+        for key in data:
+            tree.insert(key)
 
+        tree.display()
+        print("InOrder: ", tree.inorder_traverse())
+        print('Lookup 4 = ', tree.lookup(Key(4)))
+
+    tree = AVLTree()
+
+    data = [RangeKey(s, e) for s, e in ((1,10), (15, 20), (21, 50), (51, 100), (2000, 5000), (400,600), (101, 399))]
+    for key in data:
+        print('Adding: ', key)
+        tree.insert(key)
+    print('Display')
     tree.display()
     print("InOrder: ", tree.inorder_traverse())
-    print('Lookup 4 = ', tree.lookup(Key(4)))
+    for v in [1, 4, 10, 18, 28, 76, 300, 420, 1000, 2799]:
+        print('Lookup ', v, ' = ', tree.lookup(RangeKey(v)))

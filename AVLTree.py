@@ -322,20 +322,20 @@ class RangeKey:
         self.info = info
 
     def __eq__(self, other):
-        dbg('EQ: self = ', self, ' Other:', other)
+        #dbg('EQ: self = ', self, ' Other:', other)
         if other.end is None: # comparing with single value
             r = self.start <= other.start <= self.end
-            dbg(self, ' EQ ', other, '=', r)
+            #dbg(self, ' EQ ', other, '=', r)
             return r
         else:
             r = (self.start == other.start and self.end == other.end)
-            dbg(self, ' EQ ', other, '=', r)
+            #dbg(self, ' EQ ', other, '=', r)
             return r
 
     def __lt__(self, other):
-        dbg('LT: self = ', self, ' Other:', other)
+        #dbg('LT: self = ', self, ' Other:', other)
         r = self.start < other.start
-        dbg(self, ' LT  ', other, '=', r)
+        #dbg(self, ' LT  ', other, '=', r)
         return r
 
     def __str__(self):

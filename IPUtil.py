@@ -6,25 +6,8 @@ import pprint
 import collections
 import logging
 from AVLTree import AVLTree, RangeKey
-
 import rv.misc
 
-# wrappe for AVL
-class Key:
-    def __init__(self, v):
-        self.v = v
-
-    def __eq__(self, other):
-        return self.v['IP_START'] == other.v['IP_START']
-
-    def __lt__(self, other):
-        return self.v['IP_START'] < other.v['IP_START']
-
-    def __str__(self):
-        return str(self.v)
-
-    def __repr__(self):
-        return str(self.v)
 
 class IPRangeUtil:
     USE_AVL = True

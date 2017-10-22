@@ -3,7 +3,7 @@
 
 ##Lookup an IP Address in a list of IP subnet ranges using AVL Trees.
 
-In a large network environement there can be many thousands of subnets with different sizes.  Typing subnets database will normally consist of `subnet range (CIDR notation)` and other attributes such as `location`, `environment(dev or prod)`, etc.
+In a large network environement there can be many thousands of subnets with different sizes.  Subnet databases will normally consist of `subnet range (CIDR notation)` and other attributes such as `location`, `environment(dev or prod)`, etc.
 
 Network analytic  solutions require finding match of a given IP Addresses to its subnet.  Tradition method for accomplishing this with a list of subnet ranges and linear search to find range match will not be optimal for response time.  
 
